@@ -33,7 +33,5 @@
  - changed `numeric` inputMode to `tel` to use more optimized number keyboard
  - split pit and match views into two pages
  - fix [#10](https://github.com/arifire21/744-survey/issues/10)
- - added basic file / image capture input into pit form
- - added preview image thumbnails
- - integrating Vercel Blob Server Uploads
  - added SERIAL PRIMARY KEY `id` field to both tables
+ - uninstall sqlite packages - unused

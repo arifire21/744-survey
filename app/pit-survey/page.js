@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Button, Autocomplete, FormControl, FormLabel, Input, RadioGroup, Radio, List, ListItem, Checkbox, FormHelperText, Snackbar, Textarea } from '@mui/joy'
 import MenuButton from "@/components/menu-button";
 import { SFLAllTeams } from "../data/sfl-all-teams";
-import { useState, useRef, useDebugValue } from "react";
+import { useState, useRef } from "react";
 import styles from './pit.module.css'
 
 //images
@@ -31,8 +31,6 @@ export default function PitSurveyPage() {
   //form state
   const [loading, setLoading] = useState(false)
   const formRef = useRef(null);
-  const [blob, setBlob] = useState(null)
-  var instantlyKnowIfSubmit = false;  //stupid name lol but used bc state is async
   // const [validated, setValidated] = useState(false)
 
   //checkboxes
@@ -131,81 +129,6 @@ export default function PitSurveyPage() {
     }
   }
 
-  //grab first element from target because this is
-  //meant to be a array capable of holding multiple images if needed
-  function handleImages(e){
-    const eventTarget = e.target
-    const file = eventTarget.files[0]
-    //show file size bc Vercel Blob only allows a Server Upload of 4.5 MB
-    // const size = file.size / (1024 * 1024).toFixed(2)
-    const frontPreview = document.getElementById('preview-1')
-    const sidePreview = document.getElementById('preview-2')
-
-    const bytes = file.size
-    // console.log(bytes)
-    var convertedSize = 0.0;
-    if(bytes < 1000000){
-      setUnit('KB')
-      convertedSize = Math.floor(bytes/1000).toFixed(2);
-    } else{
-        setUnit('MB')
-        convertedSize = Math.floor(bytes/1000000).toFixed(2); 
-    }
-
-    if(eventTarget.id === 'front-picture'){
-      try {
-        // setFrontImage(file)
-        frontImageRef.current = file
-        console.log(frontImageRef.current)
-        setFrontImageSize(convertedSize)
-        setColor('primary')
-        setErrorString('Attached front image!')
-
-        const img = document.createElement("img");
-        img.classList.add("preview-img");
-        img.file = file;
-        frontPreview.appendChild(img);
-    
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      } catch (error) {
-        setColor('warning')
-        setErrorString('Error attaching front image!')
-        alert(error)
-      }
-    }
-    else if(eventTarget.id === 'side-picture'){
-      try {
-        // setSideImage(file)
-        sideImageRef.current = file
-        console.log(sideImageRef.current)
-        setSideImageSize(convertedSize)
-        setColor('primary')
-        setErrorString('Attached side image!')  //custom string aside from vanilla "submitted!"
-
-        const img = document.createElement("img");
-        img.classList.add("preview-img");
-        img.file = file;
-        sidePreview.appendChild(img);
-    
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      } catch (error) {
-        setColor('warning')
-        setErrorString('Error attaching side image!')
-        alert(error)
-      }
-    }
-
-    setOpen(true) //show snackbar after color/string has been set
-  }
-
   function handleValidate(passedEvent){
     if (teamNumber==='' || !drivetrain || !prefPos || !vision
       || !scoreHeight || !pickup || !climb || !investigate || !name){
@@ -277,18 +200,8 @@ export default function PitSurveyPage() {
       } else { //reset
           setSuccess(true)
           setColor('success')
-          instantlyKnowIfSubmit = true;
-          console.log(instantlyKnowIfSubmit)
-          console.log(frontImageRef.current)
-          console.log(sideImageRef.current)
-          uploadImages()
 
           formRef.current.reset();
-
-          frontImageRef.current = null;
-          sideImageRef.current = null; //reset after submitting
-          console.log(frontImageRef.current)
-          console.log(sideImageRef.current)
 
           setTeamNumber('')
 
@@ -316,12 +229,6 @@ export default function PitSurveyPage() {
 
           setFrontImageSize(0.0)
           setSideImageSize(0.0)
-
-          document.querySelectorAll('.preview-img').forEach((img) => {
-              img.remove();
-            });
-          console.log('preview-1`s img removed')
-          console.log('preview-2`s img removed')
       }
       setOpen(true)
       setLoading(false)
@@ -331,44 +238,6 @@ export default function PitSurveyPage() {
   })
 
   console.log('outside submit')
-}
-
-async function uploadImages(){
-  if(instantlyKnowIfSubmit == true){ // await only allowed at upper level so wrap in conditional
-    console.log('reached img upload')
-    const front = frontImageRef.current
-    const side = sideImageRef.current
-    const imageData = {
-      front: front,
-      side: side
-    }
-
-    setLoading(true)
-    setColor('neutral')
-    setErrorString("Uploading images...")
-    setSuccess(false)
-    setOpen(true)
-
-    await fetch(
-      `/api/upload-pit-images?filename_front=${front.name}&filename_side=${side.name}`,
-      {
-        method: 'POST',
-        body: JSON.stringify(imageData),
-      },
-    ).then((response => {
-      if(!response.ok){
-        setSuccess(false)
-        setColor('danger')
-        setErrorString("Error uploading images!")
-      } else {
-        const newBlob = (response.json()) // as PutBlobResult;
-
-        setBlob(newBlob);
-      }
-    })).catch(error => {
-      console.log(error)
-  });
-  }
 }
 
   return (
@@ -600,13 +469,6 @@ async function uploadImages(){
         `Submitted!`
         : `${errorString}`}
         </Snackbar>
-
-        {/* testing only */}
-        {blob && (
-        <div>
-          Blob url: <a href={blob.url}>{blob.url}</a>
-        </div>
-      )}
     </>
   )
 }
