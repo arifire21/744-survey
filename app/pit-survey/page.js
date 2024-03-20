@@ -12,8 +12,6 @@ import Mec from '../../public/images/mecanumdrive.png'
 import Tank from '../../public/images/tankdrive.jpg'
 import Swerve from '../../public/images/swervedrive.jpg'
 
-// import type { PutBlobResult } from '@vercel/blob'; //js quickstart does not have typing but has defined w `as`
-
 export default function PitSurveyPage() {
   const [teamNumber, setTeamNumber] = useState('')
   const [drivetrain, setDrivetrain] = useState('')
@@ -44,14 +42,6 @@ export default function PitSurveyPage() {
   const [tankSelected, setTank] = useState(false)
   const [swerveSelected, setSwerve] = useState(false)
   const [isOtherSelected, setOther] = useState(false)
-
-  // const [frontImage, setFrontImage] = useState()
-  // const [sideImage, setSideImage] = useState()
-  const frontImageRef = useRef()
-  const sideImageRef = useRef()
-  const [frontImageSize, setFrontImageSize] = useState(0.0)
-  const [sideImageSize, setSideImageSize] = useState(0.0)
-  const [unit, setUnit] = useState('MB')
 
   //snackbar state
   const [open, setOpen] = useState(false)
@@ -226,9 +216,6 @@ export default function PitSurveyPage() {
           setInvestigate('')
           setFeedback('')
           setName('')
-
-          setFrontImageSize(0.0)
-          setSideImageSize(0.0)
       }
       setOpen(true)
       setLoading(false)
@@ -237,7 +224,7 @@ export default function PitSurveyPage() {
       console.log(error)
   })
 
-  console.log('outside submit')
+  // console.log('outside submit')
 }
 
   return (
@@ -390,37 +377,6 @@ export default function PitSurveyPage() {
           </>
         )}
 
-        <h2 style={{marginBottom:0}}>Pictures</h2>
-        <small>Max size of each image: 4.5 MB</small>
-        <FormControl  sx={{ marginBottom: '1rem', height:'fit-content !important'}}>
-          <label htmlFor="front-picture"><strong>Front</strong> View:</label>
-          <input
-            type="file"
-            ref={frontImageRef}
-            id="front-picture"
-            name="picture"
-            accept="image/*"
-            capture="environment" //! this is what allows for camera functionality on mobile. desktop triggers file browser
-            onChange={handleImages}
-          />
-          <output id='filesize-front'><small>{frontImageSize} {unit}</small></output>
-          <div id="preview-1" className={styles.imgPreview}></div>
-        </FormControl>
-        
-        <FormControl  sx={{ marginBottom: '1rem', height:'fit-content !important'}}>
-          <label htmlFor="side-picture"><strong>Side</strong> View:</label>
-          <input
-            type="file"
-            ref={sideImageRef}
-            id="side-picture"
-            name="picture"
-            accept="image/*"
-            capture="environment"  //! this is what allows for camera functionality on mobile. desktop triggers file browser
-            onChange={handleImages}/>
-          <output id='filesize-side'><small>{sideImageSize} {unit}</small></output>
-          <div id="preview-2" className={styles.imgPreview}></div>
-        </FormControl>
-
         <h2>Information</h2>
         <FormControl  sx={{ marginBottom: '1rem'}}>
           <FormLabel>Do you think this robot is worth investigating? <sup className='req'>*</sup></FormLabel>
@@ -460,7 +416,7 @@ export default function PitSurveyPage() {
         <Snackbar
         variant="solid"
         color={color}
-        autoHideDuration={errorString === 'Uploading images...' ? null : (submitSuccess ? 3500 : 5000 ?? 3500)}
+        autoHideDuration={submitSuccess ? 3500 : 5000 ?? 3500}
         open={open}
         onClose={() => setOpen(false)}
         // onUnmount={handleReset}
