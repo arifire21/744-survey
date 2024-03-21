@@ -25,7 +25,7 @@ export default function ViewPitResultsPage(){
         return true;
       }
       //use .sort method here to just make this easier when using .filter
-      let sortedResults = results.sort((a, b) => a - b) //ascending order
+      let sortedResults = results.sort((a.team_number, b.team_number) => a - b) //ascending order
       setPitResults(sortedResults)
       // console.log(sortedResults)
 
@@ -33,8 +33,6 @@ export default function ViewPitResultsPage(){
         availTeams.push(team.team_number)
       });
       console.log(availTeams)
-
-      isPitLoading(false) //make sure everything is set here
       return true;
     }
 
@@ -259,6 +257,8 @@ export default function ViewPitResultsPage(){
         .then((res) => res.json()) // Parse the response data as JSON
         .then((data) => {pitDataHelper(data.results)})
         .catch( err => console.log(err) );
+
+        isPitLoading(false)
       }
   
       useEffect(() => {
