@@ -35,6 +35,7 @@ export default function ViewPitResultsPage(){
       console.log(availTeams)
 
       isPitLoading(false) //make sure everything is set here
+      return true;
     }
 
     function handleInputChange(event, value) {
@@ -297,7 +298,7 @@ export default function ViewPitResultsPage(){
               disabled={filterType === 'team' ? false : true}
               type="number"
               placeholder="start typing..."
-              options={orlandoAllTeams}
+              options={availTeams}
               value={teamCriteria}
               onChange={handleInputChange}
               clearOnBlur
