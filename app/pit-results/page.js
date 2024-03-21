@@ -2,7 +2,7 @@
 import MenuButton from "@/components/menu-button";
 import { CircularProgress, RadioGroup, Radio, Select, Option, Autocomplete } from "@mui/joy";
 import { useState, useEffect } from "react";
-import { orlandoAllTeams } from "../data/orlando-all-teams";
+// import { orlandoAllTeams } from "../data/orlando-all-teams";
 
 export default function ViewPitResultsPage(){
     const [pitLoading, isPitLoading] = useState(true)
@@ -33,6 +33,7 @@ export default function ViewPitResultsPage(){
         availTeams.push(team.team_number)
       });
       console.log(availTeams)
+      isPitLoading(false)
       return true;
     }
 
@@ -257,8 +258,6 @@ export default function ViewPitResultsPage(){
         .then((res) => res.json()) // Parse the response data as JSON
         .then((data) => {pitDataHelper(data.results)})
         .catch( err => console.log(err) );
-
-        isPitLoading(false)
       }
   
       useEffect(() => {
