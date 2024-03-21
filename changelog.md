@@ -47,3 +47,6 @@
     - all: sorted in ascending order
     - by team number: avail options grabbed from posted array
     - by [x] trait: TBD
+
+## 3.0.1
+- getting team numbers from posted array now works correctly (via useState)
