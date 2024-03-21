@@ -25,7 +25,7 @@ export default function ViewPitResultsPage(){
         return true;
       }
       //use .sort method here to just make this easier when using .filter
-      let sortedResults = results.sort((a.team_number, b.team_number) => a - b) //ascending order
+      let sortedResults = results.sort((a, b) => a.team_number - b.team_number) //ascending order
       setPitResults(sortedResults)
       // console.log(sortedResults)
 
