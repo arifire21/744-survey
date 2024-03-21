@@ -37,7 +37,7 @@
 - uninstall sqlite packages - unused
 
 # Orlando
-## 3.0
+## v3.0.0
 - team list updated to orlando roster
 - change `tel` to `decimal` - fix #4 again?
 - added `practice` match type
@@ -46,7 +46,7 @@
 - Pit Survey filtering
     - all: sorted in ascending order
     - by team number: avail options grabbed from posted array
-    - by [x] trait: TBD
+    - by [x] trait: via select dropdown
 
-## 3.0.1
+## v3.0.1
 - getting team numbers from posted array now works correctly (via useState)
