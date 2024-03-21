@@ -14,7 +14,7 @@ export default function ViewPitResultsPage(){
     const [teamCriteria, setTeamCriteria] = useState('')
     const [traitCriteria, setTraitCriteria] = useState('')
     const [filteredTeamsRender, setFilteredTeamsRender] = useState([])
-    // const [availTeamsRender, setAvailTeamsRender] = useState([])
+    const [availTeamsRender, setAvailTeamsRender] = useState([])
 
     let availTeams = []
     let filteredTeams = []
@@ -33,7 +33,9 @@ export default function ViewPitResultsPage(){
         availTeams.push(team.team_number)
       });
       console.log(availTeams)
-      isPitLoading(false)
+
+      setAvailTeamsRender(availTeams)
+        
       return true;
     }
 
@@ -258,6 +260,9 @@ export default function ViewPitResultsPage(){
         .then((res) => res.json()) // Parse the response data as JSON
         .then((data) => {pitDataHelper(data.results)})
         .catch( err => console.log(err) );
+
+        console.log(availTeamsRender)
+        isPitLoading(false) //should stay here regardless if empty or not
       }
   
       useEffect(() => {
@@ -297,7 +302,7 @@ export default function ViewPitResultsPage(){
               disabled={filterType === 'team' ? false : true}
               type="number"
               placeholder="start typing..."
-              options={availTeams}
+              options={availTeamsRender}
               value={teamCriteria}
               onChange={handleInputChange}
               clearOnBlur
