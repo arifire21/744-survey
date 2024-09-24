@@ -51,11 +51,11 @@ export default function PitSurveyPage() {
 
   // const [frontImage, setFrontImage] = useState()
   // const [sideImage, setSideImage] = useState()
-  const frontImageRef = useRef()
-  const sideImageRef = useRef()
-  const [frontImageSize, setFrontImageSize] = useState(0.0)
-  const [sideImageSize, setSideImageSize] = useState(0.0)
-  const [unit, setUnit] = useState('MB')
+  const frontImageRef = useRef(null)
+  const sideImageRef = useRef(null)
+  // const [frontImageSize, setFrontImageSize] = useState(0.0)
+  // const [sideImageSize, setSideImageSize] = useState(0.0)
+  // const [unit, setUnit] = useState('MB')
 
   //snackbar state
   const [open, setOpen] = useState(false)
@@ -231,6 +231,21 @@ export default function PitSurveyPage() {
           setColor('success')
           formRef.current.reset();
 
+          // console.log(`frontImageSize: ${frontImageSize}`)
+          // if(frontImageSize != 0.0){
+          //   setFrontImageSize(0.0)
+          //   console.log('front to 0')
+          //   setUnit("MB")
+          // }
+          // console.log(`frontImageSize: ${frontImageSize}`)
+
+          // console.log(`sideImageSize: ${sideImageSize}`)
+          // if(sideImageSize != 0.0){
+          //   setSideImageSize(0.0)
+          //   console.log('side to 0')
+          // }
+          // console.log(`sideImageSize: ${sideImageSize}`)
+
           setTeamNumber('')
 
           setLeft(false)    //setting bc customs
@@ -255,18 +270,13 @@ export default function PitSurveyPage() {
           setFeedback('')
           setName('')
 
+          //! set back to null here so File object does not remain
+          frontImageRef.current = null;
+          sideImageRef.current = null;
+
           document.querySelectorAll('.preview-img').forEach((img) => {
               img.remove();
           });
-
-          if(frontImageSize != 0.0){
-            setFrontImageSize(0.0)
-            console.log('front to 0')
-          }
-          if(sideImageSize != 0.0){
-            setSideImageSize(0.0)
-            console.log('side to 0')
-          }
       }
       setOpen(true)
       setLoading(false)
@@ -286,22 +296,22 @@ export default function PitSurveyPage() {
     const sidePreview = document.getElementById('preview-2')
 
     //show file size bc Vercel Blob only allows a Server Upload of 4.5 MB
-    const bytes = file.size
-    // console.log(bytes)
-    var convertedSize = 0.0;
-    if(bytes < 1000000){
-      setUnit('KB')
-      convertedSize = Math.floor(bytes/1000).toFixed(2);
-    } else{ //use case: if user reuploads an img and it happens to be MB
-        setUnit('MB')
-        convertedSize = Math.floor(bytes/1000000).toFixed(2); 
-    }
+    // const bytes = file.size
+    // // console.log(bytes)
+    // var convertedSize = 0.0;
+    // if(bytes < 1000000){
+    //   setUnit('KB')
+    //   convertedSize = Math.floor(bytes/1000).toFixed(2);
+    // } else{ //use case: if user reuploads an img and it happens to be MB
+    //     setUnit('MB')
+    //     convertedSize = Math.floor(bytes/1000000).toFixed(2); 
+    // }
 
     if(eventTarget.id === 'front-picture'){
       try {
         frontImageRef.current = file
         // console.log(frontImageRef.current)
-        setFrontImageSize(convertedSize)
+        // setFrontImageSize(convertedSize)
         setColor('primary')
         setErrorString('Attached front image!')
 
@@ -332,7 +342,7 @@ export default function PitSurveyPage() {
       try {
         sideImageRef.current = file
         console.log(sideImageRef.current)
-        setSideImageSize(convertedSize)
+        // setSideImageSize(convertedSize)
         setColor('primary')
         setErrorString('Attached side image!')  //custom string aside from vanilla "submitted!"
 
@@ -366,8 +376,10 @@ export default function PitSurveyPage() {
     // if(instantlyKnowIfSubmit == true){ // await only allowed at upper level so wrap in conditional
       console.log('reached img upload')
       const img = ref.current;
-      console.log(img)
-      if(img.files.length == 0){  //if nothing was ever attached or was an error
+      //if nothing was ever attached or was an error,
+      //ref will not change and have ALL properties/attributes associated w an Element.
+      //Ref with an upload will have File Object properties only.
+      if(img == null || img.hasOwnProperty('files')){
         setColor('neutral')
         setErrorString("No image to upload.")
         setSuccess(false) //use longer time duration
@@ -401,20 +413,6 @@ export default function PitSurveyPage() {
         setErrorString("Uploaded image!")
         return blob.url;
       }
-      // .then((response => {
-      //   if(!response.ok){
-      //     setSuccess(false)
-      //     setColor('danger')
-      //     setErrorString("Error uploading image!")
-      //     console.error(response)
-      //     return null
-      //   } else {
-      //     return response.json() // as PutBlobResult;
-      //   }
-      // }))
-      //   .then(data => {console.log(`data: ${data}`); return data.url})
-      //   .catch(err => console.log(err) )
-    // }
   }
 
   function submitHelper(isHiatus, e){
@@ -435,6 +433,14 @@ export default function PitSurveyPage() {
     setSuccess(false)
     setOpen(true)
   }
+
+  // useEffect(() => {
+  //   console.log(`frontSize: ${frontImageSize}`);
+  // }, [frontImageSize]);
+
+  // useEffect(() => {
+  //   console.log(`sideSize: ${sideImageSize}`);
+  // }, [sideImageSize]);
 
   return (
     <>
@@ -604,7 +610,7 @@ export default function PitSurveyPage() {
             capture="environment" //! this is what allows for camera functionality on mobile. desktop triggers file browser
             onChange={handleImageAssignmentPreview}
           />
-          <output id='filesize-front'><small>{frontImageSize} {unit}</small></output>
+          {/* <output id='filesize-front'><small>{frontImageSize} {unit}</small></output> */}
           <div id="preview-1" className={styles.imgPreview}></div>
         </FormControl>
         
@@ -618,7 +624,7 @@ export default function PitSurveyPage() {
             accept="image/*"
             capture="environment"  //! this is what allows for camera functionality on mobile. desktop triggers file browser
             onChange={handleImageAssignmentPreview}/>
-          <output id='filesize-side'><small>{sideImageSize} {unit}</small></output>
+          {/* <output id='filesize-side'><small>{sideImageSize} {unit}</small></output> */}
           <div id="preview-2" className={styles.imgPreview}></div>
         </FormControl>
 
