@@ -160,7 +160,6 @@ export default function ViewMatchResultsPage() {
                           <p className={styles.matchDetail}>Defense rating: <strong>{row.defense}/5</strong></p>
                           <p className={styles.matchDetail}>Lost comms or disabled: <strong>{row.lost_comms_disabled === "" ? '??' : row.lost_comms_disabled ?? '??'}</strong></p>
                           {row.comments && row.comments.length > 0 && <p className="result-comments">Post-Match Comments: {row.comments}</p>}
-                          <small>Survey by: {row.name}</small>
                         </AccordionDetails>
                       </Accordion>
                     )
@@ -230,7 +229,7 @@ export default function ViewMatchResultsPage() {
                         <p className={styles.matchDetail}>Defense rating: <strong>{row.defense}/5</strong></p>
                         <p className={styles.matchDetail}>Lost comms or disabled: <strong>{row.lost_comms_disabled === "" ? '??' : row.lost_comms_disabled ?? '??'}</strong></p>
                         {row.comments && row.comments.length > 0 && <p className="result-comments">Post-Match Comments: {row.comments}</p>}
-                        <small>Survey by: {row.name}</small>
+                        {/* <small>Survey by: {row.name}</small> */}
                       </AccordionDetails>
                     </Accordion>
                   )
@@ -300,7 +299,7 @@ export default function ViewMatchResultsPage() {
                         <p className={styles.matchDetail}>Defense rating: <strong>{row.defense}/5</strong></p>
                         <p className={styles.matchDetail}>Lost comms or disabled: <strong>{row.lost_comms_disabled === "" ? '??' : row.lost_comms_disabled ?? '??'}</strong></p>
                         {row.comments && row.comments.length > 0 && <p className="result-comments">Post-Match Comments: {row.comments}</p>}
-                        <small>Survey by: {row.name}</small>
+                        {/* <small>Survey by: {row.name}</small> */}
                       </AccordionDetails>
                     </Accordion>
                   )
@@ -370,7 +369,7 @@ export default function ViewMatchResultsPage() {
                         <p className={styles.matchDetail}>Defense rating: <strong>{row.defense}/5</strong></p>
                         <p className={styles.matchDetail}>Lost comms or disabled: <strong>{row.lost_comms_disabled === "" ? '??' : row.lost_comms_disabled ?? '??'}</strong></p>
                         {row.comments && row.comments.length > 0 && <p className="result-comments">Post-Match Comments: {row.comments}</p>}
-                        <small>Survey by: {row.name}</small>
+                        {/* <small>Survey by: {row.name}</small> */}
                       </AccordionDetails>
                     </Accordion>
                   )

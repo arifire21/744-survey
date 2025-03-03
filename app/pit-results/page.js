@@ -310,7 +310,6 @@ export default function ViewPitResultsPage(){
                       </div>
                     )}
                     {item.feedback && item.feedback.length > 0 && <p className={`result-comments ${styles.pitDetail}`}>Thoughts: {item.feedback}</p>}
-                    <small>Survey by: {item.name}</small>
                   </div>
                 )
               })}
@@ -363,8 +362,7 @@ export default function ViewPitResultsPage(){
                         </div>
                       )}
                       {item.feedback && item.feedback.length > 0 && <p className={styles.pitDetail}>Thoughts: {item.feedback}</p>}
-                      <small>Survey by: <strong>{item.name}</strong></small>
-                    </div>
+                      </div>
                   )
                 })}
               </div>
@@ -411,8 +409,7 @@ export default function ViewPitResultsPage(){
                         </div>
                       )}
                       {item.feedback && item.feedback.length > 0 && <p className={styles.pitDetail}>Thoughts: {item.feedback}</p>}
-                      <small>Survey by: <strong>{item.name}</strong></small>
-                    </div>
+                      </div>
                   )
                 })}
               </div>
