@@ -236,8 +236,8 @@ export default function MatchSurveyPage(){
       })
       }
 
-      function submitHelper(isHiatus, e){
-        if((isHiatus || isDemo || isOffseason) && !isDevMode){
+      function submitHelper(isHiatus, isDemo, isOffseason, e){
+        if((isHiatus || isDemo || isOffseason)){
           handleHiatusSubmit()
           return true
         }
@@ -694,7 +694,7 @@ export default function MatchSurveyPage(){
                     <FormHelperText><span style={{color: (comments.length > 500 ? 'red' : 'unset' ?? 'unset')}}>{comments.length}</span>/500</FormHelperText>
                 </FormControl>
 
-                <Button loading={loading} onClick={(e) => submitHelper(isHiatus, e)}>Submit Survey</Button>
+                <Button loading={loading} onClick={(e) => submitHelper(isHiatus, isDemo, isOffseason, e)}>Submit Survey</Button>
             </form>
 
             <Snackbar

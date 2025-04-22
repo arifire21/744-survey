@@ -131,8 +131,8 @@ export default function PitSurveyPage() {
     }
   }
 
-  function submitHelper(isHiatus, e){
-    if((isHiatus || isDemo || isOffseason) && !isDevMode){
+  function submitHelper(isHiatus, isDemo, isOffseason, e){
+    if((isHiatus || isDemo || isOffseason)){
       handleHiatusSubmit()
       return null
     }
@@ -683,7 +683,7 @@ export default function PitSurveyPage() {
           />
         </FormControl>
         
-        <Button loading={loading} onClick={(e) => submitHelper(isHiatus, e)}>Submit Survey</Button>
+        <Button loading={loading} onClick={(e) => submitHelper(isHiatus, isDemo, isOffseason, e)}>Submit Survey</Button>
         </form>
 
         <Snackbar
