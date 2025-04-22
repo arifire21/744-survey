@@ -7,13 +7,14 @@ const inter = Inter({ subsets: ["latin"] });
 const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE;
 const isOffseason = process.env.NEXT_PUBLIC_OFFSEASON;
 const isHiatus = process.env.NEXT_PUBLIC_SEASON_HIATUS;
+const isDemo = process.env.NEXT_PUBLIC_DEMO;
 
 //CHANGE THIS TO REFLECT THE PREV YEAR
 const offSeasonYear = 2024;
 
 export const metadata = {
-  title: "744 Survey",
-  description: "[FIRST FRC Team 744] Match and Pit Survey App",
+  title: "FRC Survey",
+  description: "Match and Pit Survey App",
   icons: {
     icon: '/icon.png',
     apple: '/apple-icon.png',
@@ -38,6 +39,9 @@ export default function RootLayout({ children }) {
           }
           {isHiatus && (isHiatus == "true") &&
             <div className="dev-mode-box">Hiatus Mode Enabled</div>
+          }
+          {isDemo && (isDemo == "true") &&
+            <div className="dev-mode-box">Demo Mode Enabled</div>
           }
         </div>
 

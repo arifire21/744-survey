@@ -131,3 +131,8 @@
     - comments/feedback css now have `overflow-wrap: break-word;` so the text breaks does not form in one long line
 - fix [#28](https://github.com/arifire21/744-survey/issues/28) (Mobile image preview clips into other form elements)
 - clarified error message about character limits
+
+# QOL
+## v4.4.4
+- Demo Mode finalized
+- Alert Component fixed

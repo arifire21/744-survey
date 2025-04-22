@@ -60,6 +60,7 @@ form {
 .dev-mode-container {
   position: fixed;
   width: fit-content;
+  height: fit-content;
   margin: 0 auto;
   left: 0;
   right: 0;

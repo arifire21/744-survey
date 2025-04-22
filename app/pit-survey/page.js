@@ -18,6 +18,7 @@ export default function PitSurveyPage() {
   const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE;
   const isOffseason = process.env.NEXT_PUBLIC_OFFSEASON;
   const isHiatus = process.env.NEXT_PUBLIC_SEASON_HIATUS;
+  const isDemo = process.env.NEXT_PUBLIC_DEMO;
 
   const [teamNumber, setTeamNumber] = useState('')
   const [drivetrain, setDrivetrain] = useState('')
@@ -131,12 +132,12 @@ export default function PitSurveyPage() {
   }
 
   function submitHelper(isHiatus, e){
-    if(isHiatus && !isDevMode){
-      handleisHiatusseasonSubmit()
+    if((isHiatus || isDemo || isOffseason) && !isDevMode){
+      handleHiatusSubmit()
       return null
     }
 
-    if(!isHiatus || isDevMode){
+    if((!isHiatus || !isDemo || !isOffseason) || isDevMode){
       handleValidate(e)
     }
   }
@@ -427,21 +428,17 @@ export default function PitSurveyPage() {
     }
   }
 
-  function submitHelper(isHiatus, e){
-    if(isHiatus == 'true'){
-      handleHiatusSubmit()
-      return true
-    }
-
-    if(isHiatus == 'false' || isDevMode == 'true'){
-      handleValidate(e)
-    }
-  }
-
   function handleHiatusSubmit(){
     // setLoading(true)
     setColor('warning')
-    setErrorString('HIATUS MODE enabled: cannot submit new records!')
+    if(isHiatus){
+        setErrorString('HIATUS MODE enabled: cannot submit new records!')
+    } else if(isDemo){
+        setErrorString('DEMO MODE enabled: cannot submit new records!')
+    } else if(isOffseason){
+        setErrorString('OFFSEASON MODE enabled: cannot submit new records!')
+    }
+    setErrorString('HIATUS or DEMO MODE enabled: cannot submit new records!')
     setSuccess(false)
     setOpen(true)
   }

@@ -1,7 +1,7 @@
-'use client'
+// 'use client'
 import Image from "next/image";
 import { Button } from '@mui/joy'
-// import Alert from "@/components/alert";
+import {HiatusAlert, OffseasonAlert, DevAlert, DemoAlert} from "@/components/alert";
 import styles from "@/styles/page.module.css";
 import Logo from "../public/images/FIS_CRESCENDO_Logo_Horizontal_RGB.png";
 // import { useEffect } from "react";
@@ -9,20 +9,18 @@ import Logo from "../public/images/FIS_CRESCENDO_Logo_Horizontal_RGB.png";
 const { version } = require('../package.json');
 
 export default function Home() {
-  // const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE;
-  // const isOffseason = process.env.NEXT_PUBLIC_OFFSEASON;
-
-  // useEffect(() => {
-  //   // if(isDevMode){ 
-  //     {isDevMode && isDevMode && <Alert mode='dev'/>}
-  //   // }
-  //   // if(isOffseason){
-  //     {isOffseason && isOffseason && <Alert mode='postseason'/>}
-  //   // }
-  // }, []);
+  const isDemo = process.env.NEXT_PUBLIC_DEMO;
+  const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE;
+  const isOffseason = process.env.NEXT_PUBLIC_OFFSEASON;
+  const isHiatus = process.env.NEXT_PUBLIC_SEASON_HIATUS;
 
   return (
     <>
+    {isDevMode && isDevMode && <DevAlert/>}
+    {isOffseason && isOffseason && <OffseasonAlert/>}
+    {isHiatus && isHiatus && <HiatusAlert/>}
+    {isDemo && isDemo && <DemoAlert/>}
+
     <header className={styles.flexHeader}>
       <p>Version: <span id="version-number" style={{color: '#01a0bb'}}>{version ?? 'null'}</span></p>
       <nav style={{display:'flex', flexDirection: 'column'}}>
@@ -36,7 +34,6 @@ export default function Home() {
     </header>
 
     <div id="game-logo-container">
-    {/* <img src="./FIS_CRESCENDO_Logo_Horizontal_RGB.png" alt="FIRST Crescendo Logo" width="100%" height="100%"/> */}
       <div className={styles.gameLogoContainer}>
         <Image src={Logo} alt="FIRST Crescendo Logo" fill/>
       </div>

@@ -15,6 +15,7 @@ export default function MatchSurveyPage(){
     const isDevMode = process.env.NEXT_PUBLIC_DEV_MODE;
     const isOffseason = process.env.NEXT_PUBLIC_OFFSEASON;
     const isHiatus = process.env.NEXT_PUBLIC_SEASON_HIATUS;
+    const isDemo = process.env.NEXT_PUBLIC_DEMO;
 
     //form state
     const [loading, setLoading] = useState(false)
@@ -236,18 +237,25 @@ export default function MatchSurveyPage(){
       }
 
       function submitHelper(isHiatus, e){
-        if(isHiatus == 'true'){
+        if((isHiatus || isDemo || isOffseason) && !isDevMode){
           handleHiatusSubmit()
           return true
         }
     
-        if(isHiatus == 'false' || isDevMode == 'true'){
+        if((!isHiatus || !isDemo || !isOffseason) && isDevMode){
           handleValidate(e)
         }
       }
 
       function handleHiatusSubmit(){
-        setErrorString('HIATUS MODE enabled: cannot submit new records!')
+        setColor('warning')
+        if(isHiatus){
+            setErrorString('HIATUS MODE enabled: cannot submit new records!')
+        } else if(isDemo){
+            setErrorString('DEMO MODE enabled: cannot submit new records!')
+        } else if(isOffseason){
+            setErrorString('OFFSEASON MODE enabled: cannot submit new records!')
+        }
         setSuccess(false)
         setOpen(true)
       }
