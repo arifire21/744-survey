@@ -16,10 +16,10 @@ export default function Home() {
 
   return (
     <>
-    {isDevMode && isDevMode && <DevAlert/>}
-    {isOffseason && isOffseason && <OffseasonAlert/>}
-    {isHiatus && isHiatus && <HiatusAlert/>}
-    {isDemo && isDemo && <DemoAlert/>}
+    {isDevMode && isDevMode == "true" && <DevAlert/>}
+    {isOffseason && isDevMode == "true" && <OffseasonAlert/>}
+    {isHiatus && isHiatus == "true" && <HiatusAlert/>}
+    {isDemo && isDemo == "true" && <DemoAlert/>}
 
     <header className={styles.flexHeader}>
       <p>Version: <span id="version-number" style={{color: '#01a0bb'}}>{version ?? 'null'}</span></p>
